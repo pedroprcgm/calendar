@@ -2,7 +2,7 @@ const jwt = require('../infra/jwt');
 
 module.exports = {
     checkToken: (req, res, next) => {
-        jwt.verify(req['Authorization'])
+        jwt.verify(req.headers['Authorization'] || req.headers['authorization'])
         .then(success => {
             next();
         }, err => {
