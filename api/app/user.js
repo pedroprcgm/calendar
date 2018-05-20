@@ -20,6 +20,8 @@ const _addUser = (model, user) => {
 
 const _validateFields = user => {
 
+    // TODO: validation 
+    
     // assert.isNotEmpty(user.name);
     // assert.isNotEmpty(user.email);
     // assert.isNotEmpty(user.password);    

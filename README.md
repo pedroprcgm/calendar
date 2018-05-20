@@ -9,9 +9,19 @@ Calendar Application
 - Bcrypt @ 2.0.1
 - JsonWebToken @ 8.2.1
 - Nodemon @ 1.17.4
+- Express-boom @ 2.0.0
 
 # Demo 
 
+# Features
+- Register user
+- Edit user
+- Remove user
+- Add event - doing...
+- Edit event - doing... 
+- Cancel event - doing...
+- Delete event - doing...
+- Invite user - doing...
 
 # How to use
 - Clone this repo
