@@ -3,7 +3,8 @@ const express = require('express'),
     router = require('../routes')(),
     env = require('dotenv').config(),
     cors = require('cors'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    modelsMw = require('../middlewares/models');
 
 app.use(cors({
     origin: [
@@ -14,6 +15,6 @@ app.use(cors({
 }))
 .use(bodyParser.json());
 
-app.use('/api', router);
+app.use('/api', modelsMw, router);
 
 module.exports = app;

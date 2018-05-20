@@ -1,13 +1,13 @@
 const { Router } = require('express'),
-    router = Router();
+    router = Router(),
+    user = require('../app/user');
 
-router.get('/', (req, res, next) => {
-    console.log('pass token validation')
+router.get('/', (req, res, next) => {    
     res.send('Hello World');
 });
 
 router.post('/', (req, res, next) => {
-    console.log(req.body);    
+    user
 });
 
 module.exports = router;
