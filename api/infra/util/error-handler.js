@@ -7,7 +7,6 @@ const error = {};
  * @desc status 401 
  */
 error.unauthorized = (err) => {
-    console.log(err);
     return {
         code: 401,
         err: err,

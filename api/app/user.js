@@ -31,6 +31,15 @@ const _validatePassword = (password, encrypted) => {
     return comparePassword(password, encrypted);
 };
 
+const _getUser = async (model, id) => {
+    const user = await model.findOne({ where: { id: id } })
+        .then(user => {
+            return user;
+        })
+        .catch(err => { throw Error(err) });
+    return user;
+};
+
 user.add = (models, user) => {
     return new Promise((resolve, reject) => {
         const _valid = _validateFields(user);
@@ -45,9 +54,28 @@ user.add = (models, user) => {
     });
 };
 
+user.update = (models, user, userId) => {
+    return new Promise((resolve, reject) => {
+        models.user.update(user, { fields: ['name', 'email'], where: { id: userId } })
+            .then(async result => {
+                const user = await _getUser(models.user, userId);
+                resolve(user);
+            })
+            .catch(err => reject(errorHandler.internalServerError(err)));
+    });
+};
+
+user.delete = (models, userId) => {
+    return new Promise((resolve, reject) => {
+        models.user.update({ isDeleted: true }, { where: { id: userId } })
+            .then(resolve())
+            .catch(err => reject(err))
+    });
+};
+
 user.validate = (models, user) => {
     return new Promise((resolve, reject) => {
-        models.user.findOne({ where: { email: user.email } })
+        models.user.findOne({ where: { email: user.email, isDeleted: 0 } })
             .then(userData => {
                 if (!_validatePassword(user.password, userData.password)) {
                     reject(errorHandler.unauthorized());
