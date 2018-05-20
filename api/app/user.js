@@ -1,7 +1,8 @@
 const chai = require('chai'),
     assert = chai.assert,
     { comparePassword } = require('../infra/encryption'),
-    jwt = require('../infra/jwt');
+    jwt = require('../infra/jwt'),
+    errorHandler = require('../infra/util/error-handler');
 
 const user = {};
 
@@ -35,13 +36,13 @@ user.add = (models, user) => {
         try {
             const _valid = _validateFields(user);
             if (!_valid) {
-                throw Error({ code: 400, err: 'Validation problems', msg: 'Validation problems. Check the fields.' });
+                throw Error(errorHandler.badRequest(err));
             }
 
             _addUser(models.user, user)
                 .then(
                     success => resolve(success),
-                    err => { throw Error({ code: 500, err: err }) }); // TODO: implement error log
+                    err => { throw Error(errorHandler.internalServerError(err)) }); // TODO: implement error log
 
         } catch (err) {
             reject(err);
@@ -56,14 +57,12 @@ user.validate = (models, user) => {
                 .then(userData => {
 
                     if (!_validatePassword(user.password, userData.password)) {
-                        throw Error({ code: 400, err: 'Invalid credentials', msg: 'Invalid credentials' });
+                        throw Error(errorHandler.unauthorized('Invalid credentials'));
                     }
 
                     resolve(userData);
 
-                }, err => {
-                    throw Error({ code: 500, err: '', msg: '' }); // TODO: implement error log 
-                });
+                }, err => { throw Error(errorHandler.internalServerError(err)); });
         } catch (error) {
             reject(error);
         }
