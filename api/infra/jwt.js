@@ -20,11 +20,6 @@ module.exports = {
     },
 
     decode: (token) => {
-        return new Promise( (resolve, reject) => { 
-            jwt.verify(token, (err, result) => {
-                if(err) reject(err);
-                else resolve(result)
-            });
-        });
+        return jwt.decode(token);
     }
 };
