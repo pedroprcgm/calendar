@@ -50,9 +50,8 @@ user.add = (models, user) => {
         }
 
         _addUser(models.user, user)
-            .then(
-                success => resolve(success),
-                err => { reject(errorHandler.internalServerError(err)) });
+            .then(success => resolve(success))
+            .catch(err => { reject(errorHandler.internalServerError(err)) });
     });
 };
 
