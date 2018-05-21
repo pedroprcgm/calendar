@@ -11,7 +11,7 @@ const { Router } = require('express'),
  */
 const _genToken = async (user) => {
     const token = jwt.signIn({ id: user.id, email: user.email, password: user.password })
-        .then(token => { return {token: token} })
+        .then(token => { return token })
         .catch(err => { throw Error(err) });
     return token;
 };
@@ -27,7 +27,7 @@ router.post('/', (req, res, next) => {
     user.validate(req.models, req.body)
         .then( async user => {
             const token = await _genToken(user);
-            res.send(token);
+            res.send({ user: user, token: token});
         })
         .catch(err => {
             res.boom.unauthorized(err.msg);
