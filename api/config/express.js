@@ -19,6 +19,6 @@ app.use(cors({
 
 app.use('/api', modelsMw, router);
 
-app.use('/*', (req, res, next) => { res.sendStatus(404) });
+app.use('/*', (req, res, next) => { res.boom.notFound() });
 
 module.exports = app;
