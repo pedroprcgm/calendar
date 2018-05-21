@@ -60,8 +60,14 @@ router.get('/', (req, res, next) => {
  * @return Ok - Status 200 - User after add
  * @return Error - Status 500
  */
-router.delete('/', (req, res, next) => {
-
+router.delete('/:id', (req, res, next) => {
+    event.delete(req.models, req.params.id, req.decode.id)
+        .then( () => res.sendStatus(204))
+        .catch( err => {
+            if (err.code === 400) res.boom.badRequest(err.msg);
+            else if (err.code === 403) res.boom.forbidden(err.msg);
+            else res.boom.badImplementation(err.err);
+        });
 });
 
 module.exports = router;

@@ -24,7 +24,7 @@ const _validateFields = event => {
 };
 
 const _getEvent = async (model, id) => {
-    const event = await model.findOne({ where: { id: id } })
+    const event = await model.findOne({ where: { id: id, isDeleted: false } })
         .then(event => {
             return event;
         })
@@ -46,13 +46,12 @@ event.add = (models, event) => {
 };
 
 event.update = (models, event, id, userId) => {
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+        
+        const eventData = await _getEvent(models.event, id);        
+        if (!eventData || eventData.authorId !== userId) return reject(errorHandler.forbidden());
 
-        const eventData = await _getEvent(models.event, id);
-
-        if(eventData.authorId !== userId) reject(errorHandler.forbidden());
-
-        models.event.update(event, { where: { id: id } })
+        models.event.update(event, { where: { id: id, isDeleted: false } })
             .then(async result => {
                 const event = await _getEvent(models.event, id);
                 resolve(event);
@@ -61,11 +60,15 @@ event.update = (models, event, id, userId) => {
     });
 };
 
-event.delete = (models, id) => {
-    return new Promise((resolve, reject) => {
+event.delete = (models, id, userId) => {
+    return new Promise( async (resolve, reject) => {
+
+        const eventData = await _getEvent(models.event, id);
+        if (!eventData || eventData.authorId !== userId) return reject(errorHandler.forbidden());
+
         models.event.update({ isDeleted: true }, { where: { id: id } })
             .then(resolve())
-            .catch(err => reject(err))
+            .catch(err => reject(err));
     });
 };
 
