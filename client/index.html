@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="calendarApp">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=11" />
+
+    <!--APP DESCRIPTION HERE-->
+    <meta name="description" ng-attr-content="$root.constants.description" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <link rel="shortcut icon" href="/client/assets/img/favicon.ico">
+
+    <!--APP TITLE HERE-->
+    <title ng-bind="$root.constants.appName"></title>
+    <!-- Get fonts from google APIs -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:normal,bold,italic,bolditalic,semibold" />
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="assets/libs/bootstrap/bootstrap.min.css?v=1526944805981">
+    <link rel="stylesheet" href="assets/libs/bootstrap/font-awesome.min.css?v=1526944805981">
+    <!-- endinject -->    
+</head>
+
+<body class="app">
+    <notification></notification>
+    <nav-bar></nav-bar>
+
+    <div class="content" ng-view></div>
+
+    <!-- inject:js -->
+    <script src="assets/libs/jQuery/jQuery.js?v=1526944805978"></script>
+    <script src="assets/libs/angularjs/angular.min.js?v=1526944805978"></script>
+    <script src="assets/libs/angularjs/angular-animate.min.js?v=1526944805978"></script>
+    <script src="assets/libs/angularjs/angular-cookies.min.js?v=1526944805978"></script>
+    <script src="assets/libs/angularjs/angular-route.min.js?v=1526944805978"></script>
+    <script src="assets/libs/bootstrap/bootstrap.js?v=1526944805978"></script>
+    <script src="assets/libs/angularjs/i18n/angular-locale_en-gb.js?v=1526944805978"></script>
+    <script src="assets/libs/angularjs/i18n/angular-locale_pt.js?v=1526944805978"></script>
+    <script src="app/app.js?v=1526944805978"></script>
+    <script src="app/shared/base-controller.js?v=1526944805978"></script>
+    <script src="app/components/home/home.js?v=1526944805978"></script>
+    <script src="app/components/login/login.js?v=1526944805978"></script>
+    <!-- endinject -->
+</body>
+
+</html>

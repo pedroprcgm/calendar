@@ -15,7 +15,7 @@ router.put('/:id', (req, res, next) => {
         .catch( err => res.boom.badImplementation(err.msg))
 });
 
-/** ### TODO
+/** 
  * @desc Get all user
  * @return List of active users
  */
