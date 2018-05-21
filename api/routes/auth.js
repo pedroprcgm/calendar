@@ -3,20 +3,44 @@ const { Router } = require('express'),
     user = require('../app/user'),
     router = Router();
 
+/**
+ * @param {Object} User {id, email, password}
+ * @desc Generate token
+ * @return Ok - Token
+ * @return Error - Throw Error
+ */
+const _genToken = async (user) => {
+    const token = jwt.signIn({ id: user.id, email: user.email, password: user.password })
+        .then(token => { return {token: token} })
+        .catch(err => { throw Error(err) });
+    return token;
+};
+
+/**
+ * @param {Object} Body req.body
+ * @desc Validate user with password
+ * @return Ok - Status 200 - Token
+ * @return Error - Status 401
+ * @return Error - Status 500
+ */
 router.post('/', (req, res, next) => {
     user.validate(req.models, req.body)
-        .then(user => {
-            jwt.signIn({ email: user.email, password: user.password })
-                .then(token => res.send({ token: token }))
-                .catch(err => {                    
-                    res.boom.badImplementation(err.msg);
-                });
+        .then( async user => {
+            const token = await _genToken(user);
+            res.send(token);
         })
         .catch(err => {
             res.boom.unauthorized(err.msg);
         });
 });
 
+/**
+ * @param {Object} Body req.body
+ * @desc Create an user
+ * @return Ok - Status 200 - User after added
+ * @return Error - Status 400
+ * @return Error - Status 500
+ */
 router.post('/create', (req, res, next) => {
     user.add(req.models, req.body)
         .then(success => {

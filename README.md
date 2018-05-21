@@ -17,11 +17,11 @@ Calendar Application
 - Register user
 - Edit user
 - Remove user
-- Add event - doing...
-- Edit event - doing... 
-- Cancel event - doing...
-- Delete event - doing...
-- Invite user - doing...
+- Add event - **Not implemented**
+- Edit event - **Not implemented** 
+- Cancel event - **Not implemented**
+- Delete event - **Not implemented**
+- Invite user - **Not implemented**
 
 # How to use
 - Clone this repo
