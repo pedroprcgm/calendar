@@ -2,7 +2,6 @@ const { comparePassword } = require('../infra/encryption'),
     jwt = require('../infra/jwt'),
     errorHandler = require('../infra/util/error-handler');
 
-const event = {};
 
 const _addEvent = (model, event) => {
     return new Promise((resolve, reject) => {
@@ -28,9 +27,13 @@ const _getEvent = async (model, id) => {
         .then(event => {
             return event;
         })
-        .catch(err => { throw Error(err) });
+        .catch(err => { 
+            return errorHandler.internalServerError(err);
+         });
     return event;
 };
+
+const event = {};
 
 event.add = (models, event) => {
     return new Promise((resolve, reject) => {
@@ -47,21 +50,38 @@ event.add = (models, event) => {
 
 event.update = (models, event, id, userId) => {
     return new Promise(async (resolve, reject) => {
-        
-        const eventData = await _getEvent(models.event, id);        
+
+        const eventData = await _getEvent(models.event, id);
         if (!eventData || eventData.authorId !== userId) return reject(errorHandler.forbidden());
 
         models.event.update(event, { where: { id: id, isDeleted: false } })
             .then(async result => {
                 const event = await _getEvent(models.event, id);
+                if(event && event.err) return reject(event);
                 resolve(event);
             })
             .catch(err => reject(errorHandler.internalServerError(err)));
     });
 };
 
+event.getByUser = (models, userId) => {
+    return new Promise((resolve, reject) => {
+        models.event.findAll({ attributes: ['id', 'name'], where: { authorId: userId, isDeleted: false }})
+            .then( eventList => resolve(eventList))
+            .catch( err => reject(errorHandler.internalServerError(err.err)));
+    });
+};
+
+event.get = (models, id) => {
+    return new Promise(async (resolve, reject) => {
+        const eventData = await _getEvent(models.event, id);
+        if(eventData && eventData.err) return reject(eventData);
+        resolve(eventData);
+    });
+};
+
 event.delete = (models, id, userId) => {
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
 
         const eventData = await _getEvent(models.event, id);
         if (!eventData || eventData.authorId !== userId) return reject(errorHandler.forbidden());
