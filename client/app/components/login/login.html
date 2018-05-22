@@ -7,6 +7,7 @@
             <password-input label="Password" model="user.password" required="true" 
                 confirmation-password="true"></password-input>                
         </form>
+        <span ng-show="errorCredentials" class="text-danger" ng-bind="'Verifique suas credenciais.'"></span>
     </div>
     <div class="col-sm-12">    
         <button-group form-id="loginForm" primary-message='Entrar' secondary='true' secondary-message='Registrar'

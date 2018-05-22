@@ -8,7 +8,8 @@
             };
 
             const _isAuth = () => {
-                return true;
+                if(localStorage.getItem('token')) return true;
+                else return false;
             };
 
             $routeProvider
@@ -29,19 +30,24 @@
                     controller: 'BaseController',
                     resolve: {}
                 })
+                .when('/internal-error', {
+                    templateUrl: path('shared/500/500.html'),
+                    controller: 'BaseController',
+                    resolve: {}
+                })
                 .otherwise({ redirectTo: '/page-not-found' });
                 
         })
         .run(function ($rootScope) {
-            var _baseUrl = 'http://localhost:3001';
-            var _apiUrl = 'http://localhost:8080'
+            var _apiUrl = 'http://localhost:3000';
+            var _baseUrl = 'http://localhost:8080'
             $rootScope.constants = {
 
                 appName: 'Calendar',
                 appVersion: '0.0.0.1',
                 description: 'Web site para controlar a sua agenda de forma simples e eficiente',
                 baseUrl: _baseUrl,
-                apiUrl: _apiUrl + 'api/',
+                apiUrl: _apiUrl + '/api/',
                 defaultColorGreen: '#B7DB7F',
                 defaultColorYellow: '#FF7F00',
                 defaultColorRed: '#CD603D',
