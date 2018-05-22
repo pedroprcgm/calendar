@@ -65,6 +65,7 @@ gulp.task('index', function () {
 gulp.task('sass', function () {
     return gulp.src([
         paths.getWebrootUrl('assets/css/*.scss'),
+        '!' + paths.getWebrootUrl('assets/css/variables.scss')
     ])
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest(function (file) {

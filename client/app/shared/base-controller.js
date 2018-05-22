@@ -3,7 +3,5 @@
 
     angular.module('calendarApp')
         .controller('BaseController', function () {
-            console.log('loaded')
         });
-
 })()

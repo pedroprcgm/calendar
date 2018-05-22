@@ -1,1 +1,15 @@
-<h4>Works</h4>
+
+<div class="row">
+    <div class="col-sm-12 col-md-4">
+        <h4 ng-bind="'Entrar'"></h4>
+        <form id="loginForm" ng-submit="login()">
+            <custom-input label="Email" type="email" model="user.email" placeholder="Usuário" required="true"></custom-input>
+            <password-input label="Password" model="user.password" required="true" 
+                confirmation-password="true"></password-input>                
+        </form>
+    </div>
+    <div class="col-sm-12">    
+        <button-group form-id="loginForm" primary-message='Entrar' secondary='true' secondary-message='Registrar'
+            secondary-action='register'></button-group>
+    </div>
+</div>
