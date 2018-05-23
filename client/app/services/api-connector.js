@@ -1,50 +1,66 @@
 (function() {
     'use strict';
 
-    angular.module('calendarApp').service('apiConnector', function ($http, $rootScope, $location) {
-        var _base = $rootScope.constants.apiUrl;
+    angular.module('calendarApp').service('apiConnector', function ($http, $rootScope, $location, authService) {
+        const _base = $rootScope.constants.apiUrl;
 
-        var _getUrl = (url) => { return _base + url};
+        const _getUrl = (url, id) => { 
+            var finalUrl = _base + url; 
+            finalUrl += id 
+                ?  "/" + id 
+                : '';
 
-        this.get = (url) => {
+            return finalUrl;
+        }
 
-            var promise = $http.get(_getUrl(url))
-                .then( response => {
-                    return response;
-                });
-
-            return promise;
-        };
-
-        this.put = (url, id, data) => {
-            var promise = $http.put(_getUrl(url), id, data)
-                .then( response => {
-                    return response;
-                });
-
-            return promise;
-        };
-
-        this.post = (url, data) => {
+        const _handlerOptions = (options) => {
+            if(!options) return {};
+            const _opt = {};
+            if(options.auth){
+                _opt.headers = { 'Authorization': authService.auth().token };
+            }
+            return _opt;
+        }
             
-            var promise = $http.post(_getUrl(url), data)
+
+        this.get = (url, id, options) => {
+            const opt = _handlerOptions(options);
+
+            const promise = $http.get(_getUrl(url, id), opt)
                 .then( response => {
+                    if(response.data) response = response.data;
+                    return response;
+                });
+
+            return promise;
+        };
+
+        this.put = (url, id, data, options) => {
+            const opt = _handlerOptions(options);
+            const promise = $http.put(_getUrl(url), id, data, opt)
+                .then( response => {
+                    if(response.data) response = response.data;
+                    return response;
+                });
+
+            return promise;
+        };
+
+        this.post = (url, data, options) => {
+            const opt = _handlerOptions(options);
+            const promise = $http.post(_getUrl(url), data, opt)
+                .then( response => {
+                    if(response.data) response = response.data;
                     return response;
                 })
-                // .catch( err => {
-                //     if(err.data) err = err.data;
-                //     if(err.statusCode === 500) {
-                //         $location.path('/internal-error');
-                //         return;
-                //     }
-                //     return err;
-                // });
             return promise;            
         };
 
-        this.delete = (url, id) => {
-            var promise = $http.delete(_getUrl(url), id)
+        this.delete = (url, id, options) => {
+            const opt = _handlerOptions(options);
+            const promise = $http.delete(_getUrl(url), id, opt)
                 .then( response => {
+                    if(response.data) response = response.data;
                     return response;
                 });
 

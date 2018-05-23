@@ -66,7 +66,7 @@ event.update = (models, event, id, userId) => {
 
 event.getByUser = (models, userId) => {
     return new Promise((resolve, reject) => {
-        models.event.findAll({ attributes: ['id', 'name'], where: { authorId: userId, isDeleted: false }})
+        models.event.findAll({ attributes: ['id', 'name', 'startDate', 'endDate', 'authorId'], where: { authorId: userId, isDeleted: false }})
             .then( eventList => resolve(eventList))
             .catch( err => reject(errorHandler.internalServerError(err.err)));
     });

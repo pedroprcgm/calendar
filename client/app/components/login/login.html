@@ -5,12 +5,12 @@
         <form id="loginForm" ng-submit="login()">
             <custom-input label="Email" type="email" model="user.email" placeholder="Usuário" required="true"></custom-input>
             <password-input label="Password" model="user.password" required="true" 
-                confirmation-password="true"></password-input>                
+                confirmation-password="false"></password-input>                
         </form>
         <span ng-show="errorCredentials" class="text-danger" ng-bind="'Verifique suas credenciais.'"></span>
     </div>
     <div class="col-sm-12">    
-        <button-group form-id="loginForm" primary-message='Entrar' secondary='true' secondary-message='Registrar'
-            secondary-action='register'></button-group>
+        <button-group form-id="loginForm" primary-message='Entrar' secondary='true' secondary-message='Registrar'            
+        secondaryaction="register"></button-group>
     </div>
 </div>

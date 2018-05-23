@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('calendarApp').service('loginService', function (apiConnector, $location) {
+    angular.module('calendarApp').service('loginService', function (apiConnector, $location, authService) {
 
         const _getAuthUrl = () => {
             return 'auth';
@@ -9,14 +9,14 @@
 
         this.doLogin = (user) => {
             return new Promise( (resolve, reject) => {
-                apiConnector.post(_getAuthUrl(), user)
+                apiConnector.post(_getAuthUrl(), user, {auth: false})
                     .then( response => {
-                        localStorage.setItem('token', response.token);
-                        localStorage.setItem('user', response.user);
+                        authService.auth(response);                        
                         resolve();
                     })
                     .catch( err => {
-                        reject(err.data || err);
+                        if(err.data) err = err.data;
+                        reject(err.statusCode);
                     });
             });
         }

@@ -3,4 +3,12 @@
     <div class="col-sm-12">
         <h4 class="text-center">Calendário</h4>
     </div>
+
+    <div class="col-md-12">
+        <ul>
+            <li ng-repeat="event in events">
+                <event-item data="event"></event-item>
+            </li>
+        </ul>
+    </div>
 </div>

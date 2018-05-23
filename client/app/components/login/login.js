@@ -2,28 +2,28 @@
     'use strict';
 
     angular.module('calendarApp')
-        .controller('LoginController', function ($scope, $timeout, apiConnector, loginService) {
+        .controller('LoginController', function ($scope, $location, loginService) {
 
             $scope.user = {};
             $scope.errorCredentials = false;
 
             $scope.login = () => {
+                console.log('ok')
                 loginService.doLogin($scope.user)
                     .then( success => {
                         $location.path('/');
                     })
                     .catch(err => {
-                        if(err.statusCode == 401){                            
-                            $scope.errorCredentials = true;
-                            $timeout( () => {
-                                $scope.errorCredentials = false;
-                            }, 3000)
+                        if(err === 401) {
+                            $scope.$apply(() => {
+                                $scope.errorCredentials = true;                                
+                            });                           
                         }
                     });                
-            };
-
+            }; 
+                       
             $scope.register = () => {
-                console.log('register');
+                $location.path('/register');
             };
         });
 })()

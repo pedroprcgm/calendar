@@ -3,21 +3,25 @@
 
     angular.module('calendarApp', ['ngRoute', 'ngCookies', 'ngAnimate'])
         .config(function ($routeProvider) {
+
             const path = (url) => {
                 return 'app/' + url;
             };
 
-            const _isAuth = () => {
-                if(localStorage.getItem('token')) return true;
-                else return false;
-            };
+            // function to check the authentication //
+            const Auth = ["$q", "authService", function ($q, authService) {
+                if(!authService.auth().token || authService.auth().token === "undefined") {
+                    return $q.reject({ authenticated: false });
+                }
+
+            }];
 
             $routeProvider
                 .when('/', {
                     templateUrl: path('components/home/home.html'),
                     controller: 'HomeController',
                     resolve: {
-                        isAuth: _isAuth
+                        auth: Auth
                     }
                 })
                 .when('/login', {
@@ -25,6 +29,11 @@
                     controller: 'LoginController',
                     resolve: {}
                 })
+                .when('/register', {
+                    templateUrl: path('components/register/register.html'),
+                    controller: 'RegisterController',
+                    resolve: {}
+                })                
                 .when('/page-not-found', {
                     templateUrl: path('shared/404/404.html'),
                     controller: 'BaseController',
@@ -38,11 +47,10 @@
                 .otherwise({ redirectTo: '/page-not-found' });
                 
         })
-        .run(function ($rootScope) {
+        .run(function ($rootScope, $location) {
             var _apiUrl = 'http://localhost:3000';
             var _baseUrl = 'http://localhost:8080'
             $rootScope.constants = {
-
                 appName: 'Calendar',
                 appVersion: '0.0.0.1',
                 description: 'Web site para controlar a sua agenda de forma simples e eficiente',
@@ -52,6 +60,11 @@
                 defaultColorYellow: '#FF7F00',
                 defaultColorRed: '#CD603D',
                 defaultColorBlue: '#517FBC',
-            };;
-        })            
+            };
+            $rootScope.$on('$routeChangeError', function(event, curr, prev, reject) {
+                if(reject.authenticated == false) {
+                    $location.path('/login')
+                }
+            });
+        });
 })();

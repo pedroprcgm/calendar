@@ -7,12 +7,17 @@
 			    scope: {
                     formId: '@?',
                     primaryMessage: '@',
-                    primaryAction: '=',
+                    primaryAction: '&',
                     secondary: '=?',
                     secondaryMessage: '@',
-                    secondaryAction: '='
+                    secondaryaction: '='
                 },
-                controller: function($scope){
+                controller: function($scope, $location){
+                    $scope.secondaryWrapper = () => {
+                        if($scope.secondaryAction){
+                            $scope.secondaryAction();
+                        }
+                    }
                 },
 				templateUrl: 'app/shared/button-group/button-group.html'
 			}
