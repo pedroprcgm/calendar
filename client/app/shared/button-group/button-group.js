@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	angular.module('calendarApp')
-		.directive('buttonGroup', function() {			
+		.directive('buttonGroup', function($location) {			
 			return {
 			    restrict: 'E',
 			    scope: {
@@ -14,10 +14,12 @@
                     delete: '=?',
                     deleteAction: '=?'
                 },
-                controller: function($scope, $location){
+                controller: function($scope){
                     $scope.secondaryWrapper = () => {
                         if($scope.secondaryAction){
                             $scope.secondaryAction();
+                        } else {
+                            _cancel();
                         }
                     };
 
@@ -26,6 +28,8 @@
                             $scope.deleteAction();
                         }
                     };
+
+                    const _cancel = () => $location.path('/')
 
                 },
 				templateUrl: 'app/shared/button-group/button-group.html'

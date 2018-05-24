@@ -13,7 +13,6 @@
                 if(!authService.auth().token || authService.auth().token === "undefined") {
                     return $q.reject({ authenticated: false });
                 }
-
             }];            
 
             $routeProvider
@@ -56,13 +55,13 @@
                     resolve: {}
                 })                
                 .when('/page-not-found', {
-                    templateUrl: path('shared/404/404.html'),
-                    controller: 'BaseController',
+                    templateUrl: path('components/404/404.html'),
+                    controller: 'GenericController',
                     resolve: {}
                 })
                 .when('/internal-error', {
-                    templateUrl: path('shared/500/500.html'),
-                    controller: 'BaseController',
+                    templateUrl: path('components/500/500.html'),
+                    controller: 'GenericController',
                     resolve: {}
                 })
                 .otherwise({ redirectTo: '/page-not-found' });

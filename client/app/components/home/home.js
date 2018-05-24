@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('calendarApp')
-        .controller('HomeController', function ($scope, eventService) {
+        .controller('HomeController', function ($scope, $location, eventService) {
 
             $scope.events = [];
 
@@ -14,9 +14,9 @@
                     .catch( err => console.log(err));
             };
             _init();
-            
-            $scope.newEvent = () => {
-                console.log('new called')
+
+            $scope.edit = id => {
+                $location.path('/edit/' + id);
             };
 
         });
