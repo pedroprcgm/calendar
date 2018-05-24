@@ -14,5 +14,9 @@
                 return { token: _token, user: _user};
             }
         }
+
+        this.clear = () => {
+            localStorage.clear();
+        }
     })
 })();

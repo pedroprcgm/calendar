@@ -17,7 +17,10 @@ const _addEvent = (model, event) => {
 
 const _validateFields = event => {
 
-    // TODO: validation  
+    if(!event.name) return false;
+    if(!event.description) return false;
+    if(!event.startDate) return false;
+    if(!event.endDate) return false;
 
     return true;
 };

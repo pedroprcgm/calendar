@@ -3,7 +3,7 @@
 
     angular.module('calendarApp').service('userService', function (apiConnector) {
 
-        var _url = 'user'
+        var _url = 'user';
         var _createUrl = "auth/create";
 
         this.get = (id) => {

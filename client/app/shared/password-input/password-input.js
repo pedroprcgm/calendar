@@ -15,6 +15,10 @@
                 },
                 controller: function($scope){
                     if($scope.confirmation) $scope.passConfirmation = "";
+                    
+                    $scope.id = $scope.customId 
+						? $scope.customId 
+						: 'password-input-' + $scope.$id;                     
                 },
 				templateUrl: 'app/shared/password-input/password-input.html'
 			}

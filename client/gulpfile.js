@@ -76,5 +76,5 @@ gulp.task('sass', function () {
 });
 
 gulp.task('sass:watch', function () {
-    gulp.watch([paths.getWebrootUrl('core/content/css/*.scss'), paths.getWebrootUrl('content/css/*.scss')], ['sass']);
+    gulp.watch([paths.getWebrootUrl('assets/css/*.scss')], ['sass']);
 });

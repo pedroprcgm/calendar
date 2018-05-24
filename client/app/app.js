@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('calendarApp', ['ngRoute', 'ngCookies', 'ngAnimate'])
-        .config(function ($routeProvider) {
+        .config(function ($routeProvider, $httpProvider) {
 
             const path = (url) => {
                 return 'app/' + url;
@@ -14,7 +14,7 @@
                     return $q.reject({ authenticated: false });
                 }
 
-            }];
+            }];            
 
             $routeProvider
                 .when('/', {
@@ -24,6 +24,20 @@
                         auth: Auth
                     }
                 })
+                .when('/create', {
+                    templateUrl: path('components/event/event.html'),
+                    controller: 'EventController',
+                    resolve: {
+                        auth: Auth
+                    }
+                })        
+                .when('/edit/:id', {
+                    templateUrl: path('components/event/event.html'),
+                    controller: 'EventController',
+                    resolve: {
+                        auth: Auth
+                    }
+                })                          
                 .when('/login', {
                     templateUrl: path('components/login/login.html'),
                     controller: 'LoginController',
@@ -45,6 +59,32 @@
                     resolve: {}
                 })
                 .otherwise({ redirectTo: '/page-not-found' });
+
+            $httpProvider.interceptors.push(['$q', '$location', 'authService', function($q, $location, authService) {
+                return {
+                    'request': function (config) {
+                        config.headers = config.headers || {};
+                        if (authService.auth().token) {
+                            config.headers.Authorization = authService.auth().token;
+                        }
+                        return config;
+                    },
+                    'responseError': function (response) {
+                        var responseData = {};
+                        if(response.data) responseData = response.data;
+
+                        if (response.status === 401 || response.status === 403
+                            || responseData.statusCode === 401 || responseData.statusCode === 403) {
+                            authService.clear();
+                            $location.path('/login');
+                        }
+                        if (response.status === 500 || responseData.statusCode === 500) {
+                            $location.path('/internal-error');
+                        }
+                        return $q.reject(response);
+                    }
+                };
+            }]);                
                 
         })
         .run(function ($rootScope, $location) {
