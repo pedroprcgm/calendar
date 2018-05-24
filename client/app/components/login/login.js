@@ -18,9 +18,7 @@
                     })
                     .catch(err => {
                         if(err === 401) {
-                            $scope.$apply(() => {
-                                $scope.errorCredentials = true;                                
-                            });                           
+                            $scope.errorCredentials = true;                                                 
                         }
                     });                
             }; 
