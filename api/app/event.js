@@ -17,7 +17,10 @@ const _addEvent = (model, event) => {
 
 const _validateFields = event => {
 
-    // TODO: validation  
+    if(!event.name) return false;
+    if(!event.description) return false;
+    if(!event.startDate) return false;
+    if(!event.endDate) return false;
 
     return true;
 };
@@ -66,7 +69,7 @@ event.update = (models, event, id, userId) => {
 
 event.getByUser = (models, userId) => {
     return new Promise((resolve, reject) => {
-        models.event.findAll({ attributes: ['id', 'name'], where: { authorId: userId, isDeleted: false }})
+        models.event.findAll({ attributes: ['id', 'name', 'startDate', 'endDate', 'authorId'], where: { authorId: userId, isDeleted: false }})
             .then( eventList => resolve(eventList))
             .catch( err => reject(errorHandler.internalServerError(err.err)));
     });
@@ -76,6 +79,7 @@ event.get = (models, id) => {
     return new Promise(async (resolve, reject) => {
         const eventData = await _getEvent(models.event, id);
         if(eventData && eventData.err) return reject(eventData);
+        if(eventData === null) return reject(errorHandler.badRequest());
         resolve(eventData);
     });
 };

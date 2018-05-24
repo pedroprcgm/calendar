@@ -1,0 +1,33 @@
+{
+  "name": "calendar-webapp",
+  "version": "1.0.0",
+  "description": "AngularJS Web App",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedroprcgm/calendar.git"
+  },
+  "keywords": [
+    "angularjs",
+    "calendar",
+    "webapp"
+  ],
+  "author": "Pedro Guerreiro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pedroprcgm/calendar/issues"
+  },
+  "homepage": "https://github.com/pedroprcgm/calendar#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-inject": "^4.3.2",
+    "gulp-sass": "^4.0.1",
+    "gulp-sort": "^2.0.0",
+    "gulp-watch": "^5.0.0",
+    "http-server": "^0.11.1"
+  }
+}

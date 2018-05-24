@@ -1,0 +1,11 @@
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <form id="registerForm" ng-submit="action($event, model)">
+            <custom-input label="Email" type="email" model="model.email" placeholder="Email" required="true"></custom-input>
+            <custom-input label="Nome" model="model.name" placeholder="Nome" required="true"></custom-input>
+            <password-input ng-if="withPassword" customid="register-password" label="Senha" model="model.password" required="true" confirm-password="true" model-confirmation="model.confirmPass"></password-input>                
+            <button-group form-id="registerForm" secondary='true' secondary-message='Cancelar' secondaryaction="cancel" delete="delete" delete-action="onDelete"></button-group>
+        </form>        
+    </div>
+</div>

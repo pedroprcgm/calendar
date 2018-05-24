@@ -63,7 +63,10 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
     event.get(req.models, req.params.id)
         .then( eventData => res.send(eventData))
-        .catch(err => res.boom.badImplementation(err.err));
+        .catch(err => { 
+            if (err.code === 400) res.boom.badRequest(err.msg);
+            res.boom.badImplementation(err.err);
+        })
 });
 
 /**

@@ -1,0 +1,18 @@
+@import 'variables.scss';
+
+.content {
+    font-size: 12px;
+    max-width: 100vw;
+    padding: 0px $side-space;    
+    margin-top: $top-space;     
+}
+
+.event-table {
+    .table-title:nth-child(1),
+    .table-title:nth-child(2) {
+        width: 25%;
+    }
+    tbody > tr:hover {
+        cursor: pointer;
+    }
+}

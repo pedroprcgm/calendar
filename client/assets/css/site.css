@@ -1,0 +1,12 @@
+.content {
+  font-size: 12px;
+  max-width: 100vw;
+  padding: 0px 2.5em;
+  margin-top: 60px; }
+
+.event-table .table-title:nth-child(1),
+.event-table .table-title:nth-child(2) {
+  width: 25%; }
+
+.event-table tbody > tr:hover {
+  cursor: pointer; }

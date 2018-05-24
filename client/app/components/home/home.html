@@ -1,0 +1,29 @@
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4 class="text-center">Eventos</h4>
+    </div>
+
+    <div class="col-md-12">
+        <table ng-show="events.length > 0" class="table table-responsive table-condensed event-table">
+            <thead>
+                <tr>
+                    <th class="table-title">Data início</th>
+                    <th class="table-title">Data término</th>
+                    <th class="table-title">Nome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="event in events" ng-click="edit(event.id)">
+                    <td ng-bind="event.startDate | date:'dd/MM/yyyy - hh:mm'"></td>
+                    <td ng-bind="event.endDate | date:'dd/MM/yyyy - hh:mm'"></td>
+                    <td ng-bind="event.name"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div ng-show="events.length == 0" class="alert alert-info">
+            Não há eventos agendados.
+        </div>
+    </div>
+</div>
