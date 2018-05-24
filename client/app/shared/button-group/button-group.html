@@ -1,5 +1,8 @@
 <div class="pull-right">
     <div class="btn-group">
+        <button ng-if="delete" class="btn btn-danger" type="button" ng-bind="deleteMessage || 'Remover'" ng-click="deleteActionWrapper()"></button>
+    </div>
+    <div class="btn-group">        
         <button ng-if="secondary"
             class="btn btn-secondary" type="button" ng-bind="secondaryMessage || 'Cancelar'" ng-click="secondaryWrapper()"></button>
     </div>

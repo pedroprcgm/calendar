@@ -79,6 +79,7 @@ event.get = (models, id) => {
     return new Promise(async (resolve, reject) => {
         const eventData = await _getEvent(models.event, id);
         if(eventData && eventData.err) return reject(eventData);
+        if(eventData === null) return reject(errorHandler.badRequest());
         resolve(eventData);
     });
 };

@@ -7,7 +7,7 @@
 
         this.getAll = () => {
             const aPromise = $q.defer();
-            
+
             apiConnector.get(_url, null, { auth: true })
                 .then(success => {
                     aPromise.resolve(success);
@@ -42,7 +42,7 @@
 
         this.update = (id, event) => {
             const aPromise = $q.defer();
-            
+
             apiConnector.put(_url, id, event)
                 .then(success => {
                     aPromise.resolve(success);
@@ -52,7 +52,14 @@
         };
 
         this.delete = (id) => {
+            const aPromise = $q.defer();
 
+            apiConnector.delete(_url, id)
+                .then(success => {
+                    aPromise.resolve(success);
+                })
+                .catch(err => aPromise.reject(err));
+            return aPromise.promise;
         };
 
     });

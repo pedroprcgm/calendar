@@ -6,7 +6,9 @@
 			    restrict: 'E',
 			    scope: {
                     model: '=',
-                    onSubmit: '='
+					onSubmit: '=',
+					delete: '=?',
+					onDelete: '=?'
                 },
                 controller: function($scope){
                 },

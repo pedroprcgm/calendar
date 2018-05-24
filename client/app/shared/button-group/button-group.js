@@ -9,15 +9,24 @@
                     primaryMessage: '@',
                     primaryAction: '&',
                     secondary: '=?',
-                    secondaryMessage: '@',
-                    secondaryaction: '='
+                    secondaryMessage: '@?',
+                    secondaryaction: '=?',
+                    delete: '=?',
+                    deleteAction: '=?'
                 },
                 controller: function($scope, $location){
                     $scope.secondaryWrapper = () => {
                         if($scope.secondaryAction){
                             $scope.secondaryAction();
                         }
-                    }
+                    };
+
+                    $scope.deleteActionWrapper = () => {
+                        if($scope.deleteAction){
+                            $scope.deleteAction();
+                        }
+                    };
+
                 },
 				templateUrl: 'app/shared/button-group/button-group.html'
 			}

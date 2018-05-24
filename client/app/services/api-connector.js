@@ -44,7 +44,7 @@
         };
 
         this.delete = (url, id) => {            
-            const promise = $http.delete(_getUrl(url), id)
+            const promise = $http.delete(_getUrl(url, id))
                 .then(response => {
                     if (response.data) response = response.data;
                     return response;

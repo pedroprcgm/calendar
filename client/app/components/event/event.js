@@ -18,7 +18,9 @@
                         event.endDate = convertedDates[1];
                         $scope.event = event;
                     })
-                    .catch( err => console.log(err));
+                    .catch( err => {
+                        if(err.status === 400) $location.path('/');
+                    });
 
             } else {
                 $scope.isEdit = false;
@@ -48,7 +50,17 @@
                             }
                         })
                 }
-            }
+            };
+
+            $scope.delete = () => {
+
+                eventService.delete($scope.id)
+                    .then( success => {
+                        alert('Removido');
+                        $location.path('/')
+                    })
+                    .catch( err => console.log(err));
+            };
             
 
         });
