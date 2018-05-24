@@ -12,4 +12,7 @@
     .table-title:nth-child(2) {
         width: 25%;
     }
+    tbody > tr:hover {
+        cursor: pointer;
+    }
 }
