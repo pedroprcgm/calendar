@@ -10,7 +10,7 @@
                     primaryAction: '&',
                     secondary: '=?',
                     secondaryMessage: '@?',
-                    secondaryaction: '=?',
+                    secondaryAction: '=?',
                     delete: '=?',
                     deleteAction: '=?'
                 },
