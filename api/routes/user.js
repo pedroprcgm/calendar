@@ -16,11 +16,19 @@ router.put('/:id', (req, res, next) => {
 });
 
 /** 
- * @desc Get all user
- * @return List of active users
+ * @desc Get user by Id
+ * @return Ok - Status 200 - User
+ * @return Error - Status 500
+ * @return Error - Status 400
  */
-router.get('/', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
     
+    user.get(req.models, req.params.id)
+        .then( user => res.send(user))
+        .catch( err => {
+            if (err.code === 400) res.boom.badRequest(err.msg);
+            else res.boom.badImplementation(err.err);
+        });
 });
 
 /**

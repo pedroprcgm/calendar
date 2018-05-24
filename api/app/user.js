@@ -55,6 +55,14 @@ user.add = (models, user) => {
     });
 };
 
+user.get = (models, userId) => {
+    return new Promise( async (resolve, reject) => {
+        const user = await _getUser(models.user, userId);
+        if(user) resolve(user)
+        else reject(errorHandler.badRequest());
+    });
+};
+
 user.update = (models, user, userId) => {
     return new Promise((resolve, reject) => {
         models.user.update(user, { fields: ['name', 'email'], where: { id: userId } })
