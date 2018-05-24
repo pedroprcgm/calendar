@@ -2,13 +2,16 @@
     'use strict';
 
     angular.module('calendarApp')
-        .controller('LoginController', function ($scope, $location, loginService) {
+        .controller('LoginController', function ($scope, $location, loginService, authService) {
 
             $scope.user = {};
             $scope.errorCredentials = false;
 
+            if(authService.auth().token && authService.auth().token !== 'undefined'){
+                $location.path('/');
+            }
+
             $scope.login = () => {
-                console.log('ok')
                 loginService.doLogin($scope.user)
                     .then( success => {
                         $location.path('/');

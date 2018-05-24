@@ -1,44 +1,53 @@
 (function () {
     'use strict';
 
-    angular.module('calendarApp').service('userService', function (apiConnector) {
+    angular.module('calendarApp').service('userService', function ($q, apiConnector) {
 
         var _url = 'user';
         var _createUrl = "auth/create";
 
         this.get = (id) => {
-            return new Promise((resolve, reject) => {
-                apiConnector.get(_url, id)
-                    .then(success => {
-                        resolve(success);
-                    })
-                    .catch(err => reject(err));
-            });
-            
+            const ngPromise = $q.defer();
+
+            apiConnector.get(_url, id)
+                .then(success => {
+                    ngPromise.resolve(success);
+                })
+                .catch(err => ngPromise.reject(err));             
+            return ngPromise.promise;
         };
 
         this.add = (user) => {
-            return new Promise((resolve, reject) => {
+            const ngPromise = $q.defer();
+
                 apiConnector.post(_createUrl, user)
                     .then(success => {
-                        resolve(success);
+                        ngPromise.resolve(success);
                     })
-                    .catch(err => reject(err));
-            });
+                    .catch(err => ngPromise.reject(err));
+
+            return ngPromise.promise
         };
 
         this.update = (id, user) => {
-            return new Promise((resolve, reject) => {
-                apiConnector.post(_createUrl, user)
-                    .then(success => {
-                        resolve(success);
-                    })
-                    .catch(err => reject(err));
-            });
+            const ngPromise = $q.defer();
+            apiConnector.put(_url, id, user)
+                .then(success => {
+                    ngPromise.resolve(success);
+                })
+                .catch(err => ngPromise.reject(err));
+            return ngPromise.promise
         };
 
         this.delete = (id) => {
+            const ngPromise = $q.defer();
 
+            apiConnector.delete(_url, id)
+                .then(success => {
+                    ngPromise.resolve(success);
+                })
+                .catch(err => ngPromise.reject(err));
+            return ngPromise.promise;
         };
 
     });

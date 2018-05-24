@@ -5,10 +5,25 @@
     </div>
 
     <div class="col-md-12">
-        <ul>
-            <li ng-repeat="event in events">
-                <event-item data="event"></event-item>
-            </li>
-        </ul>
+        <table ng-show="events.length > 0" class="table table-responsive table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>Data início</th>
+                    <th>Data término</th>
+                    <th>Nome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="event in events | filter:search">
+                    <td ng-bind="event.startDate | date:'dd/MM/yyyy'"></td>
+                    <td ng-bind="event.endDate | date:'dd/MM/yyyy'"></td>
+                    <td ng-bind="event.name"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div ng-show="events.length == 0" class="alert alert-info">
+            Não há eventos agendados.
+        </div>
     </div>
 </div>

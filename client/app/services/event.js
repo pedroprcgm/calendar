@@ -6,60 +6,60 @@
         var _url = 'event';
 
         this.getAll = () => {
-            const aPromise = $q.defer();
+            const ngPromise = $q.defer();
 
             apiConnector.get(_url, null, { auth: true })
                 .then(success => {
-                    aPromise.resolve(success);
+                    ngPromise.resolve(success);
                 })
-                .catch(err => aPromise.reject(err));
+                .catch(err => ngPromise.reject(err));
 
-            return aPromise.promise;
+            return ngPromise.promise;
         };
 
         this.get = (id) => {
-            const aPromise = $q.defer();
+            const ngPromise = $q.defer();
 
             apiConnector.get(_url, id)
                 .then(success => {
-                    aPromise.resolve(success);
+                    ngPromise.resolve(success);
                 })
-                .catch(err => aPromise.reject(err));
+                .catch(err => ngPromise.reject(err));
 
-            return aPromise.promise;
+            return ngPromise.promise;
         };
 
         this.add = (event) => {
-            const aPromise = $q.defer();
+            const ngPromise = $q.defer();
 
             apiConnector.post(_url, event)
                 .then(success => {
-                    aPromise.resolve(success);
+                    ngPromise.resolve(success);
                 })
-                .catch(err => aPromise.reject(err));
-            return aPromise.promise
+                .catch(err => ngPromise.reject(err));
+            return ngPromise.promise
         };
 
         this.update = (id, event) => {
-            const aPromise = $q.defer();
+            const ngPromise = $q.defer();
 
             apiConnector.put(_url, id, event)
                 .then(success => {
-                    aPromise.resolve(success);
+                    ngPromise.resolve(success);
                 })
-                .catch(err => aPromise.reject(err));
-            return aPromise.promise;
+                .catch(err => ngPromise.reject(err));
+            return ngPromise.promise;
         };
 
         this.delete = (id) => {
-            const aPromise = $q.defer();
+            const ngPromise = $q.defer();
 
             apiConnector.delete(_url, id)
                 .then(success => {
-                    aPromise.resolve(success);
+                    ngPromise.resolve(success);
                 })
-                .catch(err => aPromise.reject(err));
-            return aPromise.promise;
+                .catch(err => ngPromise.reject(err));
+            return ngPromise.promise;
         };
 
     });

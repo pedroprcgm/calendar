@@ -37,7 +37,14 @@
                     resolve: {
                         auth: Auth
                     }
-                })                          
+                })    
+                .when('/perfil', {
+                    templateUrl: path('components/user/user.html'),
+                    controller: 'UserController',
+                    resolve: {
+                        auth: Auth
+                    }
+                })                                        
                 .when('/login', {
                     templateUrl: path('components/login/login.html'),
                     controller: 'LoginController',

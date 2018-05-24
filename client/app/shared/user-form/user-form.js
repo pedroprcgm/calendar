@@ -7,12 +7,14 @@
 			    scope: {
                     model: '=',
                     onSubmit: '=',
-                    withPassword: '=?'
+                    withPassword: '=?',
+                    delete: '=?',
+                    onDelete: '=?'
                 },
                 controller: function($scope){
+                    
                     $scope.action = (event, user) => {
                         if($scope.onSubmit){
-                            console.log('submit')
                             $scope.onSubmit(event, user);
                         }
                     };

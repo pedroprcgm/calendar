@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('calendarApp')
-        .controller('EventController', function ($scope, $routeParams, $route, $location, $timeout, eventService, utilService) {
+        .controller('EventController', function ($scope, $routeParams, $route, $location, eventService, utilService) {
 
             $scope.isEdit = undefined;
             $scope.id = undefined;
@@ -13,7 +13,7 @@
 
                 eventService.get($scope.id)
                     .then( event => { 
-                        const convertedDates = utilService.dataToClient(event.startDate, event.endDate);
+                        const convertedDates = utilService.dateToClient(event.startDate, event.endDate);
                         event.startDate = convertedDates[0];
                         event.endDate = convertedDates[1];
                         $scope.event = event;
