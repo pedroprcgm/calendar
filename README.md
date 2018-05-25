@@ -34,6 +34,6 @@ Calendar Application
 - Run the command `npm start` for execute the project in production mode
 
 # Running Client
-- On file `client/app.js` change the variables `_apiUrl` and `_baseUrl` to your respective API url and server url
+- On file `client/app/app.js` change the variables `_apiUrl` and `_baseUrl` to your respective API url and server url
 - Run `npm install -g http-server`
 - Go to client folder and run `http-server` 
