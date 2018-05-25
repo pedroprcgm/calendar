@@ -63,9 +63,24 @@ const _getEventConflicts = async (model, userId, eventFilter) => {
     var _where = {
         authorId: userId,
         isDeleted: false,
-        startDate: {
-            [Op.between]: [eventFilter.startDate, eventFilter.endDate]
-        }
+        [Op.or]: [
+            {
+                startDate: {
+                    [Op.lte]: eventFilter.startDate,                     
+                }, 
+                endDate: {
+                    [Op.gt]: eventFilter.startDate
+                }
+            },
+            {
+                startDate: {
+                    [Op.gte]: eventFilter.startDate,                     
+                }, 
+                endDate: {
+                    [Op.lt]: eventFilter.endDate
+                }
+            },            
+        ]
     };
 
     if(eventFilter.id){
@@ -105,6 +120,7 @@ event.add = (models, event) => {
         // check conflicts
         const _conflicts = await _getEventConflicts(models.event, event.authorId, event)
             .then( e => {
+                console.log(e)
                 return e;
             })
             .catch(err => {
