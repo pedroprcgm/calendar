@@ -1,7 +1,4 @@
-const chai = require('chai'),
-    assert = chai.assert,
-    { comparePassword } = require('../infra/encryption'),
-    jwt = require('../infra/jwt'),
+const { comparePassword } = require('../infra/encryption'),
     errorHandler = require('../infra/util/error-handler');
 
 const user = {};
@@ -18,13 +15,10 @@ const _addUser = (model, user) => {
     });
 };
 
-const _validateFields = user => {
+const _validate = user => {
 
-    // TODO: validation 
-    
-    // assert.isNotEmpty(user.name);
-    // assert.isNotEmpty(user.email);
-    // assert.isNotEmpty(user.password);    
+    if (!user.name || user.name === '') return false;
+    if (!user.email || user.email === '') return false;    
 
     return true;
 };
@@ -42,11 +36,25 @@ const _getUser = async (model, id) => {
     return user;
 };
 
+const _getUserByEmail = async (model, email) => {
+    const user = await model.findOne({ where: { email: email } })
+        .then(user => {
+            return user;
+        })
+        .catch(err => { throw Error(err) });
+    return user;
+}
+
 user.add = (models, user) => {
-    return new Promise((resolve, reject) => {
-        const _valid = _validateFields(user);
+    return new Promise( async (resolve, reject) => {
+        const _valid = _validate(user);
+        const _exists = await _getUserByEmail(models.user, user.email);
+        
         if (!_valid) {
-            reject(errorHandler.badRequest(err));
+            return reject(errorHandler.badRequest());
+        } 
+        if(_exists) {
+            return reject(errorHandler.badRequest('User already exists'))
         }
 
         _addUser(models.user, user)
@@ -56,9 +64,9 @@ user.add = (models, user) => {
 };
 
 user.get = (models, userId) => {
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const user = await _getUser(models.user, userId);
-        if(user) resolve(user)
+        if (user) resolve(user)
         else reject(errorHandler.badRequest());
     });
 };
