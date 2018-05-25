@@ -97,7 +97,7 @@
             var _apiUrl = 'http://localhost:3000';
             var _baseUrl = 'http://localhost:8080'
             $rootScope.constants = {
-                appName: 'Calendar',
+                appName: 'Calendário',
                 appVersion: '0.0.0.1',
                 description: 'Web site para controlar a sua agenda de forma simples e eficiente',
                 baseUrl: _baseUrl,

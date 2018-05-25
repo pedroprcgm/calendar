@@ -11,16 +11,14 @@ Calendar Application
 - Nodemon @ 1.17.4
 - Express-boom @ 2.0.0
 
-# Demo 
-
 # Features
 - Register user
 - Edit user
 - Remove user
-- Add event - **Not implemented**
-- Edit event - **Not implemented** 
-- Cancel event - **Not implemented**
-- Delete event - **Not implemented**
+- Add event
+- Edit event
+- Delete event
+- Check conflicts between events
 - Invite user - **Not implemented**
 
 # How to use
@@ -30,5 +28,12 @@ Calendar Application
 - Run the command `npm install` on folders api and client
 - Create a database 
 - Create a .env file with your settings inside api folder. Look the example `.env-example`
+
+# Running API
 - Run the command `npm run dev` for execute the project in development mode
 - Run the command `npm start` for execute the project in production mode
+
+# Running Client
+- On file `client/app.js` change the variables `_apiUrl` and `_baseUrl` to your respective API url and server url
+- Run `npm install -g http-server`
+- Go to client folder and run `http-server` 
