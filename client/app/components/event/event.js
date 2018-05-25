@@ -27,16 +27,21 @@
                 $scope.event = {};
             }
 
-            $scope.submit = (event, data) => {
+            $scope.submit = ($event, data) => {
 
-                if($scope.isEdit){
-                    
+                if(data.startDate > data.endDate){
+                    alert('Datas incoerentes');
+                    return;
+                }
+
+                if($scope.isEdit) {                    
                     eventService.update($scope.id, data)
                         .then( success => {
                             alert('Atualizado');
                             $route.reload();
                         })
                 } else {
+
                     // adicionar
                     eventService.add(data)
                         .then( success => {
@@ -44,9 +49,13 @@
                             $location.path('/');
                         })
                         .catch( err => {
-                            if(err.data) err = data;
+                            if(err.data) err = err.data;
                             if(err.statusCode === 400 || err.status === 400){
-                                alert('Verifique os campos');
+                                if(err.message === 'TimeConflict'){
+                                    alert('Conflito com outro evento');
+                                } else {
+                                    alert('Verifique os campos');
+                                }
                             }
                         })
                 }
