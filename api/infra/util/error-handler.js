@@ -6,11 +6,11 @@ const error = {};
  * @param {Object | String } err
  * @desc status 400
  */
-error.badRequest = (err) => {
+error.badRequest = (err, msg) => {
     return {
         code: 400,
         err: err,
-        msg: 'Validation problems. Check fields.'
+        msg: msg || 'Validation problems. Check fields.'
     };
 };
 

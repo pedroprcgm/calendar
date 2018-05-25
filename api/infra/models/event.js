@@ -1,4 +1,3 @@
-const { encryptPassword } = require('../encryption');
 
 module.exports = function (sequelize, DataTypes) {
     const Event = sequelize.define('event', {

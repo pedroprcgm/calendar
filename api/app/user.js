@@ -1,7 +1,4 @@
-const chai = require('chai'),
-    assert = chai.assert,
-    { comparePassword } = require('../infra/encryption'),
-    jwt = require('../infra/jwt'),
+const { comparePassword } = require('../infra/encryption'),
     errorHandler = require('../infra/util/error-handler');
 
 const user = {};

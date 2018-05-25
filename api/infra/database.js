@@ -5,7 +5,8 @@ const Sequelize = require('sequelize'),
 module.exports = () => {
 
     const sequelize = new Sequelize(process.env.DB_URL, {
-        dialect: 'mysql'
+        dialect: 'mysql',
+        logging: false
     });
 
     const db = {

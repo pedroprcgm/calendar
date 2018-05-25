@@ -2,11 +2,6 @@ const { Router } = require('express'),
     router = Router(),
     event = require('../app/event');
 
-
-const _validateFields = (event) => {
-
-};
-
 /**
  * @param {Object} Body req.body
  * @desc Create an event
@@ -23,7 +18,9 @@ router.post('/', (req, res, next) => {
             res.send(success);
         })
         .catch(err => {
-            if (err.code === 400) res.boom.badRequest(err.msg);
+            if (err.code === 400) { 
+                res.boom.badRequest(err.msg);
+            }
             else res.boom.badImplementation(err.err);
         });
 });
