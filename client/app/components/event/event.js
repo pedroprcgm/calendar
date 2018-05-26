@@ -40,6 +40,16 @@
                             alert('Atualizado');
                             $route.reload();
                         })
+                        .catch( err => {
+                            if(err.data) err = err.data;
+                            if(err.statusCode === 400 || err.status === 400){
+                                if(err.message === 'TimeConflict'){
+                                    alert('Conflito com outro evento');
+                                } else {
+                                    alert('Verifique os campos');
+                                }
+                            }
+                        })
                 } else {
 
                     // adicionar

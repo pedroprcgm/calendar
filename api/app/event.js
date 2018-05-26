@@ -97,6 +97,7 @@ const _getEventConflicts = async (model, userId, eventFilter) => {
             return eventList;
         })
         .catch(err => {
+            console.log('err')
             return errorHandler.internalServerError(err)
         });
 
@@ -118,14 +119,7 @@ event.add = (models, event) => {
         }
 
         // check conflicts
-        const _conflicts = await _getEventConflicts(models.event, event.authorId, event)
-            .then( e => {
-                console.log(e)
-                return e;
-            })
-            .catch(err => {
-                return errorHandler.internalServerError(err);
-            })
+        const _conflicts = await _getEventConflicts(models.event, event.authorId, event);            
 
         if(_conflicts && _conflicts.length > 0) {
             reject(errorHandler.badRequest('TimeConflict', 'TimeConflict'));
@@ -141,17 +135,26 @@ event.add = (models, event) => {
 
 event.update = (models, event, id, userId) => {
     return new Promise(async (resolve, reject) => {
-
+        
+        // check author
         const eventData = await _getEvent(models.event, id);
         if (!eventData || eventData.authorId !== userId) return reject(errorHandler.forbidden());
+        
+        // check conflicts
+        const _conflicts = await _getEventConflicts(models.event, event.authorId, event);            
 
+        if(_conflicts && _conflicts.length > 0) {
+            reject(errorHandler.badRequest('TimeConflict', 'TimeConflict'));
+            return;
+        }
+        
         models.event.update(event, { where: { id: id, isDeleted: false } })
             .then(async result => {
                 const event = await _getEvent(models.event, id);
                 if (event && event.err) return reject(event);
                 resolve(event);
             })
-            .catch(err => reject(errorHandler.internalServerError(err)));
+            .catch(err => console.log(4), reject(errorHandler.internalServerError(err)));
     });
 };
 

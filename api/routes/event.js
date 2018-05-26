@@ -37,6 +37,7 @@ router.put('/:id', (req, res, next) => {
         .then(event => res.send(event))
         .catch(err => {
             if (err.code === 403) res.boom.forbidden(err.msg);
+            if (err.code === 400) res.boom.badRequest(err.msg);
             else res.boom.badImplementation(err.err);
         })
 });
