@@ -15,6 +15,11 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        status: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            allowNull: false
+        },
         startDate: {
             type: DataTypes.DATE,
             allowNull: false
@@ -22,18 +27,20 @@ module.exports = function (sequelize, DataTypes) {
         endDate: {
             type: DataTypes.DATE,
             allowNull: false
-        },      
+        },
         isDeleted: {
             type: DataTypes.BOOLEAN,
             defaultValue: 0
-        }          
-    }, {
-        freezeTableName: true,
-        timestamps: false
-    });
+        }
+    },
+        {
+            freezeTableName: true,
+            timestamps: false
+        }
+    );
 
     Event.associate = (models) => {
-        Event.belongsTo(models.user, {as: 'author'});
+        Event.belongsTo(models.user, { as: 'author' });
     };
 
     return Event;
