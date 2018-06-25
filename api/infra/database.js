@@ -3,7 +3,7 @@ const Sequelize = require('sequelize'),
     path = require('path');
 
 module.exports = () => {
-
+    
     const sequelize = new Sequelize(process.env.DB_URL, {
         dialect: 'mysql'
     });
