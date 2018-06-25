@@ -66,29 +66,29 @@ const _getEventConflicts = async (model, userId, eventFilter) => {
         [Op.or]: [
             {
                 startDate: {
-                    [Op.lte]: eventFilter.startDate,                     
-                }, 
+                    [Op.lte]: eventFilter.startDate,
+                },
                 endDate: {
                     [Op.gt]: eventFilter.startDate
                 }
             },
             {
                 startDate: {
-                    [Op.gte]: eventFilter.startDate,                     
-                }, 
+                    [Op.gte]: eventFilter.startDate,
+                },
                 endDate: {
                     [Op.lt]: eventFilter.endDate
                 }
-            },            
+            },
         ]
     };
 
-    if(eventFilter.id){
+    if (eventFilter.id) {
         _where.id = {
             [Op.ne]: eventFilter.id
         };
     }
-    
+
     const events = await model.findAll({
         attributes: ['id', 'name', 'startDate', 'endDate', 'authorId'],
         where: _where
@@ -108,7 +108,7 @@ const event = {};
 
 
 event.add = (models, event) => {
-    return new Promise( async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
 
         // validate
         const _valid = _validateFields(event);
@@ -119,7 +119,7 @@ event.add = (models, event) => {
 
         // check conflicts
         const _conflicts = await _getEventConflicts(models.event, event.authorId, event)
-            .then( e => {
+            .then(e => {
                 console.log(e)
                 return e;
             })
@@ -127,7 +127,7 @@ event.add = (models, event) => {
                 return errorHandler.internalServerError(err);
             })
 
-        if(_conflicts && _conflicts.length > 0) {
+        if (_conflicts && _conflicts.length > 0) {
             reject(errorHandler.badRequest('TimeConflict', 'TimeConflict'));
             return;
         }
@@ -199,6 +199,27 @@ event.delete = (models, id, userId) => {
         models.event.update({ isDeleted: true }, { where: { id: id } })
             .then(resolve())
             .catch(err => reject(err));
+    });
+};
+
+
+event.changeStatus = (models, id, status, userId) => {
+    return new Promise(async (resolve, reject) => {
+
+        const eventData = await _getEvent(models.event, id);
+        if (!eventData || eventData.authorId !== userId) return reject(errorHandler.forbidden());
+
+        const _status = statusEnum[status];
+        if (_status === undefined) return reject(errorHandler.badRequest());
+
+        models.event.update({ status: _status }, { where: { id: id, isDeleted: false } })
+            .then(async result => {
+                const event = await _getEvent(models.event, id);
+                if (event && event.err) return reject(event);
+                resolve(event);
+            })
+            .catch(err => reject(errorHandler.internalServerError(err)));
+
     });
 };
 

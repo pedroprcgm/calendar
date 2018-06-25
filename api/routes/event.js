@@ -18,7 +18,7 @@ router.post('/', (req, res, next) => {
             res.send(success);
         })
         .catch(err => {
-            if (err.code === 400) { 
+            if (err.code === 400) {
                 res.boom.badRequest(err.msg);
             }
             else res.boom.badImplementation(err.err);
@@ -59,8 +59,8 @@ router.get('/', (req, res, next) => {
  */
 router.get('/:id', (req, res, next) => {
     event.get(req.models, req.params.id)
-        .then( eventData => res.send(eventData))
-        .catch(err => { 
+        .then(eventData => res.send(eventData))
+        .catch(err => {
             if (err.code === 400) res.boom.badRequest(err.msg);
             res.boom.badImplementation(err.err);
         })
@@ -79,6 +79,25 @@ router.delete('/:id', (req, res, next) => {
         .catch(err => {
             if (err.code === 400) res.boom.badRequest(err.msg);
             else if (err.code === 403) res.boom.forbidden(err.msg);
+            else res.boom.badImplementation(err.err);
+        });
+});
+
+
+/**
+ * @param {String} Id Event ID
+ * @param {Object} Body req.body
+ * @desc Change event status
+ * @return Ok - Status 200 - Event after update
+ * @return Error - Status 500
+ * @return Invalid status - Status 400
+ */
+router.put('/:id/status', (req, res, next) => {
+    event.changeStatus(req.models, req.body.status, req.params.id, req.decode.id)
+        .then(event => res.send(event))
+        .catch(err => {
+            if (err.code === 403) res.boom.forbidden(err.msg);
+            if (err.code === 400) res.boom.badRequest(err.msg);
             else res.boom.badImplementation(err.err);
         });
 });
