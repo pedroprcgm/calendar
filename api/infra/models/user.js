@@ -1,13 +1,6 @@
-const { encryptPassword } = require('../encryption');
-
-module.exports = function (sequelize, DataTypes) {
-    const User = sequelize.define('user', {
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
-            primaryKey: true,
-            allowNull: false
-        },
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+    var User = sequelize.define('user', {
         name: {
             type: DataTypes.STRING,
             allowNull: false
@@ -33,15 +26,9 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: 0
         }
-    }, {
-        hooks: {
-            beforeCreate: user => {
-                user.password = encryptPassword(user.password)
-            }
-        },
-        freezeTableName: true,
-        timestamps: false
-    });
-
+    }, {});
+    User.associate = function (models) {
+        // associations can be defined here
+    };
     return User;
-}
+};

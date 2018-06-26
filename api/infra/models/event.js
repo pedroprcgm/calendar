@@ -1,12 +1,6 @@
-
-module.exports = function (sequelize, DataTypes) {
-    const Event = sequelize.define('event', {
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
-            primaryKey: true,
-            allowNull: false
-        },
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+    var event = sequelize.define('event', {
         name: {
             type: DataTypes.STRING,
             allowNull: false
@@ -32,16 +26,9 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: 0
         }
-    },
-        {
-            freezeTableName: true,
-            timestamps: false
-        }
-    );
-
-    Event.associate = (models) => {
-        Event.belongsTo(models.user, { as: 'author' });
+    }, {});
+    event.associate = function (models) {
+        event.belongsTo(models.user, { as: 'author' });
     };
-
-    return Event;
-}
+    return event;
+};
